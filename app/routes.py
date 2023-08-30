@@ -4,4 +4,4 @@ from app import app
 @app.route('/')
 @app.route('/index')
 def index():
-    return "Hello Music App"
+    return "Hello Music App - Ready for Lab 2"
