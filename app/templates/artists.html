@@ -2,10 +2,8 @@
 
 {% block content %}
     <h2>List of Ithaca Artists</h2>
-
-        <ul>
         {% for artist in artists_list %}
-            <li><a href="{{ url_for('gunpoets') }}"</a>{{ artist }}</li>
+            <div><p><a href="{{ url_for('gunpoets') }}"</a>{{ artist }}</p></div>
         {% endfor %}
-        </ul>
+
 {% endblock %}
