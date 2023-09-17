@@ -5,9 +5,7 @@
 
         <ul>
         {% for artist in artists_list %}
-            <li><a href="{{ url_for('gunpoets') }}"</a>John Brown's Body</li>
-            <li><a href="{{ url_for('gunpoets') }}"</a>Gunpoets</li>
-            <li><a href="{{ url_for('gunpoets') }}"</a>Donna the Buffalo</li>
-            <li><a href="{{ url_for('gunpoets') }}"</a>The Blind Spots</li>
+            <li><a href="{{ url_for('gunpoets') }}"</a>{{ artist }}</li>
+        {% endfor %}
         </ul>
 {% endblock %}
