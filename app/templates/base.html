@@ -2,9 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+        {% if title %}
+        <title>{{ title }}</title>
+        {% else %}
+        <title>Ithaca Music</title>
+        {% endif %}
 </head>
 <body>
-
+    <div>
+        <a href="{{ url_for('index') }}"><b>Ithaca Music:</b></a>
+            <a href="{{ url_for('artists') }}">Artists</a>
+            <a href="{{ url_for('newartists') }}">New Artists</a>
+    </div>
+    {% block content %}{% endblock %}
 </body>
 </html>
