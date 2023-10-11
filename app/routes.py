@@ -31,3 +31,13 @@ def newartists():
         return render_template('artist.html', details=details)
     return render_template('newartists.html',  title='Create a New Artist', form=form)
 
+@app.route('/reset_db')
+def reset_db():
+   flash("Resetting database: deleting old data and repopulating with dummy data")
+   # clear all data from all tables
+   meta = db.metadata
+   for table in reversed(meta.sorted_tables):
+       print('Clear table {}'.format(table))
+       db.session.execute(table.delete())
+   db.session.commit()
+
