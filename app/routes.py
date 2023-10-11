@@ -1,5 +1,5 @@
 from flask import render_template, flash, request, redirect, url_for
-from app import app
+from app import app, db
 from app.forms import CreateArtistForm
 
 @app.route('/')

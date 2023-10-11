@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h2>{{ details.name }}</h2>
+    <h3>{{ details.hometown }}</h3>
+    <p>{{ details.description }}</p>
+
+    <h3><b>Events:</b></h3>
+    <ul>
+        {% for event in details.events %}
+        <li>{{ event }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+</body>
+</html>
