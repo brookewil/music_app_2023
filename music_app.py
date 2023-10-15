@@ -1,5 +1,5 @@
 from app import app, db
-from app.models import Artist, Events, Venues
+from app.models import Artist, Events, Venue
 
 with app.app_context():
     db.create_all()
