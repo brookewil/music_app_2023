@@ -19,9 +19,9 @@ def allArtists():
 @app.route('/artist/<name>')
 def artist(name):
     artist = db.session.query(Artist).filter_by(name=name).first()
-    events = db.session.query(Events).all()
+    event = db.session.query(Events).all()
 
-    return render_template('artist.html', title=name, artist=artist, events=events)
+    return render_template('artist.html', title=name, artist=artist, events=event)
 
 @app.route('/newartists', methods=['GET', 'POST'])
 def newartists():
@@ -70,6 +70,17 @@ def reset_db():
     e6 = Events(title="Sneaking Out of Heaven TOUR", date=datetime(2024, 4, 1, 8, 30), venues_id=5)
 
     db.session.add_all([e1, e2, e3, e4, e5, e6])
+    db.session.commit()
+
+    a2e_list = [
+        ArtistToEvent(artist=1, event=1),
+        ArtistToEvent(artist=1, event=6),
+        ArtistToEvent(artist=4, event=2),
+        ArtistToEvent(artist=4, event=3),
+        ArtistToEvent(artist=4, event=4),
+        ArtistToEvent(artist=5, event=5)]
+
+    db.session.add_all(a2e_list)
     db.session.commit()
 
     return render_template('index.html')

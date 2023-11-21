@@ -3,14 +3,15 @@
 {% block content %}
 
     <h2>{{ artist.name }}</h2>
-    <div><p><b>Hometown: </b> {{ artist.hometown }}</p></div>
-    <div><p><b>Description: </b> {{ artist.description }}</p></div>
+    <div><p><b>Hometown:</b> {{ artist.hometown }}</p></div>
+    <div><p><b>Description:</b> {{ artist.description }}</p></div>
 
-    <h3><b>Events:</b></h3>
+    <h3>Events:</h3>
     <ul>
-        {% for event in events %}
-            <div><p>{{ event.title }}, {{ event.date }}</p></div>
-        {% endfor %}
+       {% for event in event_list %}
+        <li><b>{{ event.name }}</b> at the <b>{{ event.venue.name }}</b>
+            on <b>{{event.start_time.strftime('%A, %b %d %Y')}}</b>.</li>
+       {% endfor %}
     </ul>
 
 {% endblock %}

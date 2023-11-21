@@ -7,6 +7,7 @@ class Artist(db.Model):
     name = db.Column(db.String(50), index=True, unique=True, nullable=False)
     hometown = db.Column(db.String(100))
     description = db.Column(db.Text(350))
+    a2e = db.relationship("ArtistToEvent", backref="artist")
 
     def __repr__(self):
         return '<Artist: {},>'.format(self.name)
@@ -17,10 +18,10 @@ class Events(db.Model):
     title = db.Column(db.String(200))
     date = db.Column(db.DateTime, index=True)
     venues_id = db.Column(db.Integer, db.ForeignKey('Venue.id'))
+    a2e = db.relationship("ArtistToEvent", backref="events")
 
     def __repr__(self):
         return '<Upcoming Events: {}>'.format(self.title)
-        #return '<Upcoming Events: {} featuring {} at {} on {}>'.format(self.title, self.artist_id, self.venue_id, self.datetime)
 
 class Venue(db.Model):
     __tablename__="Venue"
@@ -33,9 +34,10 @@ class Venue(db.Model):
         return '<Venue: {}>'.format(self.placename)
 
 class ArtistToEvent(db.Model):
+    __tablename__ = "ArtistToEvent"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    event_id = db.Column(db.Integer, db.ForeignKey('Events.id'))
     artist_id = db.Column(db.Integer, db.ForeignKey('Artist.id'))
+    event_id = db.Column(db.Integer, db.ForeignKey('Events.id'))
 
     def __repr__(self):
         return '<ArtistToEvent {}>'.format(self.id)
