@@ -19,9 +19,9 @@ def allArtists():
 @app.route('/artist/<name>')
 def artist(name):
     artist = db.session.query(Artist).filter_by(name=name).first()
-    event = db.session.query(Events).all()
+    events = db.session.query(Events).join(Artist, Artist.id == ArtistToEvent.artist_id).join(ArtistToEvent, ArtistToEvent.event_id == Events.id).filter(Artist.name == name).all()
 
-    return render_template('artist.html', title=name, artist=artist, events=event)
+    return render_template('artist.html', title=name, artist=artist, events=events)
 
 @app.route('/newartists', methods=['GET', 'POST'])
 def newartists():
@@ -62,12 +62,12 @@ def reset_db():
     db.session.add_all([v1, v2, v3, v4, v5])
     db.session.commit()
 
-    e1 = Events(title="Sneaking Out of Heaven TOUR", date=datetime(2024,3,11,7, 0), venues_id=3)
-    e2 = Events(title="Dawn to Dusk TOUR", date=datetime(2023, 10, 18, 8, 30), venues_id=2)
-    e3 = Events(title="Dawn to Dusk TOUR", date=datetime(2023, 10, 20, 8), venues_id=3)
-    e4 = Events(title="Dawn to Dusk TOUR", date=datetime(2023,10,22,8), venues_id=4)
-    e5 = Events(title="The Jaws of Life TOUR", date=datetime(2023, 11, 7, 6, 30), venues_id=5)
-    e6 = Events(title="Sneaking Out of Heaven TOUR", date=datetime(2024, 4, 1, 8, 30), venues_id=5)
+    e1 = Events(title="Sneaking Out of Heaven TOUR", date=datetime(2024,3,11,19, 0), venues_id=3)
+    e2 = Events(title="Dawn to Dusk TOUR", date=datetime(2023, 10, 18, 20, 30), venues_id=2)
+    e3 = Events(title="Dawn to Dusk TOUR", date=datetime(2023, 10, 20, 20), venues_id=3)
+    e4 = Events(title="Dawn to Dusk TOUR", date=datetime(2023,10,22,19), venues_id=4)
+    e5 = Events(title="The Jaws of Life TOUR", date=datetime(2023, 11, 7, 18, 30), venues_id=5)
+    e6 = Events(title="Sneaking Out of Heaven TOUR", date=datetime(2024, 4, 1, 20, 30), venues_id=5)
 
     db.session.add_all([e1, e2, e3, e4, e5, e6])
     db.session.commit()
