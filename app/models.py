@@ -32,3 +32,10 @@ class Venue(db.Model):
     def __repr__(self):
         return '<Venue: {}>'.format(self.placename)
 
+class ArtistToEvent(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    event_id = db.Column(db.Integer, db.ForeignKey('Event.id'))
+    artist_id = db.Column(db.Integer, db.ForeignKey('Artist.id'))
+
+    def __repr__(self):
+        return '<ArtistToEvent {}>'.format(self.id)
