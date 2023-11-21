@@ -34,7 +34,7 @@ class Venue(db.Model):
 
 class ArtistToEvent(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    event_id = db.Column(db.Integer, db.ForeignKey('Event.id'))
+    event_id = db.Column(db.Integer, db.ForeignKey('Events.id'))
     artist_id = db.Column(db.Integer, db.ForeignKey('Artist.id'))
 
     def __repr__(self):
