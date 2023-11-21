@@ -18,7 +18,7 @@ class Events(db.Model):
     title = db.Column(db.String(200))
     date = db.Column(db.DateTime, index=True)
     venues_id = db.Column(db.Integer, db.ForeignKey('Venue.id'))
-    a2e = db.relationship("ArtistToEvent", backref="events")
+    a2e = db.relationship("ArtistToEvent", backref="event")
 
     def __repr__(self):
         return '<Upcoming Events: {}>'.format(self.title)
