@@ -73,12 +73,12 @@ def reset_db():
     db.session.commit()
 
     a2e_list = [
-        ArtistToEvent(artist=1, event=1),
-        ArtistToEvent(artist=1, event=6),
-        ArtistToEvent(artist=4, event=2),
-        ArtistToEvent(artist=4, event=3),
-        ArtistToEvent(artist=4, event=4),
-        ArtistToEvent(artist=5, event=5)]
+        ArtistToEvent(artist=a1, event=e1),
+        ArtistToEvent(artist=a1, event=e6),
+        ArtistToEvent(artist=a4, event=e2),
+        ArtistToEvent(artist=a4, event=e3),
+        ArtistToEvent(artist=a4, event=e4),
+        ArtistToEvent(artist=a5, event=e5)]
 
     db.session.add_all(a2e_list)
     db.session.commit()
