@@ -19,8 +19,9 @@ def allArtists():
 @app.route('/artist/<name>')
 def artist(name):
     artist = db.session.query(Artist).filter_by(name=name).first()
+    events = db.session.query(Events).all()
 
-    return render_template('artist.html', title=name, artist=artist)
+    return render_template('artist.html', title=name, artist=artist, events=events)
 
 @app.route('/newartists', methods=['GET', 'POST'])
 def newartists():

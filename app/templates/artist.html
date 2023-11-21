@@ -6,6 +6,13 @@
     <div><p><b>Hometown: </b> {{ artist.hometown }}</p></div>
     <div><p><b>Description: </b> {{ artist.description }}</p></div>
 
+    <h3><b>Events:</b></h3>
+    <ul>
+        {% for event in events %}
+            <div><p>{{ event.title }}, {{ event.date }}</p></div>
+        {% endfor %}
+    </ul>
+
 {% endblock %}
 </body>
 </html>
