@@ -16,9 +16,9 @@ def allArtists():
     artists_list = db.session.query(Artist).all()
     return render_template('allArtists.html', title="List of Artists", artists_list=artists_list)
 
-@app.route('/allArtist/<name>')
+@app.route('/artist/<name>')
 def artist(name):
-    artist = db.session.query(Artist).filter_by(name=name)
+    artist = db.session.query(Artist).filter_by(name=name).first()
 
     return render_template('artist.html', title=name, artist=artist)
 
