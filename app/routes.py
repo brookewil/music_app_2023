@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import render_template, flash, request, redirect, url_for
 from app import app, db
 from flask_wtf import FlaskForm
-from app.forms import CreateArtistForm
+from app.forms import *
 from app.models import *
 
 @app.route('/')
@@ -14,7 +14,7 @@ def index():
 @app.route('/allArtists', methods=['GET', 'POST'])
 def allArtists():
     artists_list = db.session.query(Artist).all()
-    return render_template('allArtists.html', title="List of Artists", artists_list=artists_list)
+    return render_template('allArtists.html', title="List of Artists", artists=artists_list)
 
 @app.route('/artist/<name>')
 def artist(name):
@@ -23,14 +23,23 @@ def artist(name):
 
     return render_template('artist.html', title=name, artist=artist, events=events)
 
-@app.route('/newartists', methods=['GET', 'POST'])
-def newartists():
+@app.route('/newArtist', methods=['GET', 'POST'])
+def newArtist():
     form = CreateArtistForm()
     if form.is_submitted():
+        if db.session.query(Artist).filter_by(name=form.name.data).first():
+            flash("Artist Page Already Exists")
+            return render_template('newArtist.html', title="Create a New Artist", form=form)
+
+        artist = Artist(form.name.data, form.hometown.data, form.description.data)
+        db.session.add(artist)
+        db.session.commit()
         flash('Page created for {}'.format(form.name.data))
-        details = request.form
-        return render_template('artist.html', details=details)
-    return render_template('newartists.html',  title='Create a New Artist', form=form)
+        #artists_list = db.session.query(Artist).all()
+
+        return redirect(url_for('allArtists'))
+
+    return render_template('newArtist.html', title='Create a New Artist', form=form)
 
 @app.route('/reset_db')
 def reset_db():
