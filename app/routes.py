@@ -13,10 +13,10 @@ def index():
 
 @app.route('/artists', methods=['GET', 'POST'])
 def artists():
-    artists_list = ["John Brown's Body", "Gunpoets", "Donna The Buffalo", "The Blind Spots"]
-    return render_template('artists.html',  artists_list=artists_list)
+    artists_list = db.session.query(Artist).all()
+    return render_template('artists.html', title="List of Artists", artists_list=artists_list)
 
-@app.route('/gunpoets', methods=['GET', 'POST'])
+@app.route('/artist/<name>', methods=['GET', 'POST'])
 def gunpoets():
     details = {
         "name": "The Gunpoets",
@@ -53,7 +53,7 @@ def reset_db():
     a5 = Artist(name="Pierce the Veil", hometown="San Diego, CA", description="Pierce the Veil is an American rock band formed in 2006. Founded by brothers Vic and Mike Fuentes after the disbanding of Before Today. Jaime Preciado and Tony Perry joined the group in 2007, on bass and lead guitar respectively.")
     a6 = Artist(name="WEi", hometown="Seoul, SK", description="WEi (Korean: 위아이; pronounced We-I) is a South Korean boy band formed by Oui Entertainment. The group consists of six members: Daehyeon, Donghan, Yongha, Yohan, Seokhwa, and Junseo. The group made their debut on October 5, 2020, with their extended play Identity: First Sight.")
 
-    db.session.add_all[(a1, a2, a3, a4, a5, a6)]
+    db.session.add_all([a1, a2, a3, a4, a5, a6])
     db.session.commit()
 
     v1 = Venue(placename="Pier 17", location="89 South St, New York, NY 10038")
@@ -76,3 +76,4 @@ def reset_db():
     db.session.commit()
 
     return render_template('index.html')
+

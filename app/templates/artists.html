@@ -1,9 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>List of Ithaca Artists</h2>
         {% for artist in artists_list %}
-            <div><p><a href="{{ url_for('gunpoets') }}"</a>{{ artist }}</p></div>
+            <div><p><a href="{{ url_for('artists', name=artist.name) }}">{{ artist.name }}</a></p></div>
         {% endfor %}
-
 {% endblock %}
