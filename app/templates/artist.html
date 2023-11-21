@@ -14,6 +14,10 @@
        {% endfor %}
     </ul>
 
+    {% if not events %}
+        <div><p>No Upcoming Events</p></div>
+    {%  endif %}
+
 {% endblock %}
 </body>
 </html>
