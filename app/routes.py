@@ -31,12 +31,10 @@ def newArtist():
             flash("Artist Page Already Exists")
             return render_template('newArtist.html', title="Create a New Artist", form=form)
 
-        artist = Artist(form.name.data, form.hometown.data, form.description.data)
+        artist = Artist(name=form.name.data, hometown=form.hometown.data, description=form.description.data)
         db.session.add(artist)
         db.session.commit()
-        flash('Page created for {}'.format(form.name.data))
-        #artists_list = db.session.query(Artist).all()
-
+        flash('Page created for {},'.format(form.name.data))
         return redirect(url_for('allArtists'))
 
     return render_template('newArtist.html', title='Create a New Artist', form=form)
@@ -67,8 +65,9 @@ def reset_db():
     v3 = Venue(placename="Coca-Cola Coliseum", location="45 Manitoba Dr, Toronto, ON M6K 3C3, Canada")
     v4 = Venue(placename="The Theater at Madison Square Garden", location="4 Pennsylvania Plaza, New York, NY 10001")
     v5 = Venue(placename="Arizona Financial Theatre", location="400 W Washington St, Phoenix, AZ 85003")
+    v6 = Venue(placename="Stone Pony Summer Stage", location=" 909 Ocean Ave N, Asbury Park, NJ 07712")
 
-    db.session.add_all([v1, v2, v3, v4, v5])
+    db.session.add_all([v1, v2, v3, v4, v5, v6])
     db.session.commit()
 
     e1 = Events(title="Sneaking Out of Heaven TOUR", date=datetime(2024,3,11,19, 0), venues_id=3)
@@ -77,8 +76,10 @@ def reset_db():
     e4 = Events(title="Dawn to Dusk TOUR", date=datetime(2023,10,22,19), venues_id=4)
     e5 = Events(title="The Jaws of Life TOUR", date=datetime(2023, 11, 7, 18, 30), venues_id=5)
     e6 = Events(title="Sneaking Out of Heaven TOUR", date=datetime(2024, 4, 1, 20, 30), venues_id=5)
+    e7 = Events(title="Sad Summer Festival", date=datetime(2024, 7, 29, 13, 30), venues_id=6)
+    e8 = Events(title="Warped Tour", date=datetime(2024, 8, 5, 14, 30), venues_id=6)
 
-    db.session.add_all([e1, e2, e3, e4, e5, e6])
+    db.session.add_all([e1, e2, e3, e4, e5, e6, e7, e8])
     db.session.commit()
 
     a2e_list = [
@@ -87,7 +88,13 @@ def reset_db():
         ArtistToEvent(artist=a4, event=e2),
         ArtistToEvent(artist=a4, event=e3),
         ArtistToEvent(artist=a4, event=e4),
-        ArtistToEvent(artist=a5, event=e5)]
+        ArtistToEvent(artist=a5, event=e5),
+        ArtistToEvent(artist=a1, event=e7),
+        ArtistToEvent(artist=a5, event=e7),
+        ArtistToEvent(artist=a1, event=e8),
+        ArtistToEvent(artist=a2, event=e8),
+        ArtistToEvent(artist=a3, event=e8),
+        ArtistToEvent(artist=a5, event=e8)]
 
     db.session.add_all(a2e_list)
     db.session.commit()

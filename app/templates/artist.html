@@ -10,7 +10,7 @@
     <ul>
        {% for event in events %}
         <li><b>{{ event.title }}</b> at the <b>{{ event.venue.placename }}</b>
-            on <b>{{event.date.strftime('%m/%d/%y, at %I:%M%p')}}</b>.</li>
+            on <b>{{event.date.strftime('%m/%d/%y, at %I:%M%p')}}</b></li>
        {% endfor %}
     </ul>
 
