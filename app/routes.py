@@ -59,6 +59,32 @@ def newVenue():
 
     return render_template('newVenue.html', title='Add a New Venue', form=form)
 
+@app.route('/newEvent', methods=['GET', 'POST'])
+@login_required
+def newEvent():
+
+    form = CreateEventForm()
+    form.venue.choices = [(v.id, v.name) for v in Venue.query.all()]
+    form.artists.choices = [(a.id, a.name) for a in Artist.query.all()]
+
+    if form.is_submitted():
+        if db.session.query(Events).filter_by(title=form.title.data).first():
+            flash("Event Already Exists")
+            return render_template('newEvent.html', title="Add a New Event", form=form)
+
+        event = Events(form.title.data, form.date.data, form.venue.data)
+        db.session.add(event)
+        db.session.commit()
+        event_id = event.id
+        for artist in form.artists.data:
+            join = ArtistToEvent(artist, event_id)
+            db.session.add(join)
+            db.session.commit()
+        flash('Page created for {}'.format(form.title.data))
+        return redirect(url_for('allArtists'))
+
+    return render_template('newEvent.html', title='Add a New Event', form=form)
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Add New Event</h2>
+    <form action="" method="post" novalidate>
+        <p>
+            {{ form.title.label }}<br>
+            {{ form.title(size=32) }}<br>
+        </p>
+        <p>
+            {{ form.date.label }}<br>
+            {{ form.date(class='datepicker') }}<br>
+        </p>
+        <p>
+            {{ form.venue.label }}<br>
+            {{ form.venue }}<br>
+        </p>
+        <p>
+            {{ form.artists.label }}<br>
+            {{ form.artists }}<br>
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
