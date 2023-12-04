@@ -42,6 +42,23 @@ def newArtist():
 
     return render_template('newArtist.html', title='Create a New Artist', form=form)
 
+@app.route('/newVenue', methods=['GET', 'POST'])
+@login_required
+def newVenue():
+    form = AddVenueForm()
+    if form.is_submitted():
+        if db.session.query(Venue).filter_by(name=form.name.data).first():
+            flash("Venue Already Exists")
+            return render_template('newVenue.html', title="Add a New Venue", form=form)
+
+        venue = Venue(name=form.name.data, location=form.location.data, address=form.address.data)
+        db.session.add(venue)
+        db.session.commit()
+        flash('Page created for {},'.format(form.name.data))
+        return redirect(url_for('allArtists'))
+
+    return render_template('newVenue.html', title='Add a New Venue', form=form)
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -100,12 +117,12 @@ def reset_db():
     db.session.add_all([a1, a2, a3, a4, a5, a6])
     db.session.commit()
 
-    v1 = Venue(placename="Pier 17", location="89 South St, New York, NY 10038")
-    v2 = Venue(placename="The Armory", location="500 South 6th St, Minneapolis, MN 55415")
-    v3 = Venue(placename="Coca-Cola Coliseum", location="45 Manitoba Dr, Toronto, ON M6K 3C3, Canada")
-    v4 = Venue(placename="The Theater at Madison Square Garden", location="4 Pennsylvania Plaza, New York, NY 10001")
-    v5 = Venue(placename="Arizona Financial Theatre", location="400 W Washington St, Phoenix, AZ 85003")
-    v6 = Venue(placename="Stone Pony Summer Stage", location=" 909 Ocean Ave N, Asbury Park, NJ 07712")
+    v1 = Venue(placename="Pier 17", location="New York, NY", address="89 South St, New York, NY 10038")
+    v2 = Venue(placename="The Armory", location="Minneapolis, MN", address="500 South 6th St, Minneapolis, MN 55415")
+    v3 = Venue(placename="Coca-Cola Coliseum", location="Toronto, Canada", address="45 Manitoba Dr, Toronto, ON M6K 3C3, Canada")
+    v4 = Venue(placename="The Theater at Madison Square Garden", location="New York, NY", address="4 Pennsylvania Plaza, New York, NY 10001")
+    v5 = Venue(placename="Arizona Financial Theatre", location="Phoenix, AZ", address="400 W Washington St, Phoenix, AZ 85003")
+    v6 = Venue(placename="Stone Pony Summer Stage", location="Asbury Park, NJ", address=" 909 Ocean Ave N, Asbury Park, NJ 07712")
 
     db.session.add_all([v1, v2, v3, v4, v5, v6])
     db.session.commit()

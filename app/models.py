@@ -28,12 +28,13 @@ class Events(db.Model):
 class Venue(db.Model):
     __tablename__="Venue"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    placename = db.Column(db.String(200))
+    name = db.Column(db.String(200))
     location = db.Column(db.String(200))
+    address = db.Column(db.String(200))
     events = db.relationship("Events", backref="venue")
 
     def __repr__(self):
-        return '<Venue: {}>'.format(self.placename)
+        return '<Venue: {}>'.format(self.name)
 
 class ArtistToEvent(db.Model):
     __tablename__ = "ArtistToEvent"

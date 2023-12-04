@@ -4,12 +4,6 @@ from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from app import db
 from app.models import *
 
-class CreateArtistForm(FlaskForm):
-    name = StringField('Artist Name', validators=[DataRequired()])
-    hometown = StringField('Hometown', validators=[DataRequired()])
-    description = TextAreaField('Description', validators=[DataRequired()])
-    submit = SubmitField('Create New Artist')
-
 class RegistrationForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     username = StringField('Username', validators=[DataRequired()])
@@ -32,3 +26,15 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Login')
+
+class CreateArtistForm(FlaskForm):
+    name = StringField('Artist Name', validators=[DataRequired()])
+    hometown = StringField('Hometown', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[DataRequired()])
+    submit = SubmitField('Create New Artist')
+
+class AddVenueForm(FlaskForm):
+    name = StringField('Venue Name', validators=[DataRequired()])
+    location = StringField('Location', validators=[DataRequired()])
+    address = StringField('Address', validators=[DataRequired()])
+    submit = SubmitField('Create New Venue')
