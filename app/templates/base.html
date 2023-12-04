@@ -11,9 +11,13 @@
 <body>
     <div>
         <a href="{{ url_for('index') }}"><b>Ithaca Music:</b></a>
-        <a href="{{ url_for('allArtists') }}">Artists</a>
-        <a href="{{ url_for('newArtist') }}">New Artists</a>
-        <a href="{{ url_for('login') }}">Login</a>
+        {% if current_user.is_anonymous %}
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('allArtists') }}">Artists</a>
+            {% else %}
+            <a href="{{ url_for('logout') }}">Logout</a>
+            <a href="{{ url_for('newArtist') }}">New Artists</a>
+            {% endif %}
     </div>
     <hr>
     {% with messages = get_flashed_messages() %}

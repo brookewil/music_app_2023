@@ -1,8 +1,10 @@
 from datetime import datetime
 
 from flask import render_template, flash, request, redirect, url_for
+from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
 from flask_wtf import FlaskForm
+from urllib.parse import urlsplit
 from app.forms import *
 from app.models import *
 
@@ -24,6 +26,7 @@ def artist(name):
     return render_template('artist.html', title=name, artist=artist, events=events)
 
 @app.route('/newArtist', methods=['GET', 'POST'])
+@login_required
 def newArtist():
     form = CreateArtistForm()
     if form.is_submitted():
@@ -41,8 +44,25 @@ def newArtist():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+        login_user(user, remember=form.remember_me.data)
+        next_page = request.args.get('next')
+        if not next_page or urlsplit(next_page).netloc != '':
+            next_page = url_for('index')
+        return redirect(next_page)
     return render_template('login.html', title='Login', form=form)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 @app.route('/reset_db')
 def reset_db():
