@@ -12,11 +12,12 @@
     <div>
         <a href="{{ url_for('index') }}"><b>Ithaca Music:</b></a>
         {% if current_user.is_anonymous %}
-            <a href="{{ url_for('login') }}">Login</a>
             <a href="{{ url_for('allArtists') }}">Artists</a>
+            <a href="{{ url_for('login') }}"><b>Login</b></a>
             {% else %}
-            <a href="{{ url_for('logout') }}">Logout</a>
+            <a href="{{ url_for('allArtists') }}">Artists</a>
             <a href="{{ url_for('newArtist') }}">New Artists</a>
+            <a href="{{ url_for('logout') }}"><b>Logout</b></a>
             {% endif %}
     </div>
     <hr>
