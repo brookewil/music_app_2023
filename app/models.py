@@ -61,3 +61,6 @@ class User(UserMixin, db.Model):
     @login.user_loader
     def load_user(id):
         return db.session.get(User, int(id))
+
+    def __repr__(self):
+        return '<User {}>'.format(self.username)
