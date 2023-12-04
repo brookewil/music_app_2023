@@ -72,12 +72,12 @@ def newEvent():
             flash("Event Already Exists")
             return render_template('newEvent.html', title="Add a New Event", form=form)
 
-        event = Events(form.title.data, form.date.data, form.venue.data)
+        event = Events(title=form.title.data, date=form.date.data, venues_id=form.venue.data)
         db.session.add(event)
         db.session.commit()
         event_id = event.id
         for artist in form.artists.data:
-            join = ArtistToEvent(artist, event_id)
+            join = ArtistToEvent(artist_id=artist, event_id=event_id)
             db.session.add(join)
             db.session.commit()
         flash('Page created for {}'.format(form.title.data))
