@@ -2,6 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+        crossorigin="anonymous">
+
         {% if title %}
         <title>{{ title }}</title>
         {% else %}
@@ -9,29 +16,51 @@
         {% endif %}
 </head>
 <body>
-    <div>
-        <a href="{{ url_for('index') }}"><b>Ithaca Music:</b></a>
-        {% if current_user.is_anonymous %}
-            <a href="{{ url_for('allArtists') }}">Artists</a>
-            <a href="{{ url_for('login') }}"><b>Login</b></a>
+    <script
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+        crossorigin="anonymous">
+    </script>
+{% block navbar %}
+    <nav class="navbar fixed-top navbar-light bg-secondary navbar-expand-lg">
+        <a class="navbar-brand" href="{{ url_for('index') }}" id="title">Ithaca Music</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            {% if current_user.is_anonymous %}
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('allArtists') }}">Artists</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+                </ul>
             {% else %}
-            <a href="{{ url_for('allArtists') }}">Artists</a>
-            <a href="{{ url_for('newArtist') }}">New Artist</a>
-            <a href="{{ url_for('newVenue') }}">New Venue</a>
-            <a href="{{ url_for('newEvent') }}">New Event</a>
-            <a href="{{ url_for('logout') }}"><b>Logout</b></a>
+                <ul class="nav navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('allArtists') }}">Artists</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('newArtist') }}">New Artist</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('newVenue') }}">New Venue</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('newEvent') }}">New Event</a></li>
+                </ul>
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
             {% endif %}
-    </div>
-    <hr>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
+        </div>
+    </nav>
+{% endblock %}
+
+    <div class="container mt-5 ml-0">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
         {% for message in messages %}
-        <li>{{ message }}</li>
+        <div class="alert alert-info" role="alert">{{ message }}</div>
         {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-    {% block content %}{% endblock %}
+      {% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
 </body>
 </html>
